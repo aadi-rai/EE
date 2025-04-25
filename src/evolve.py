@@ -16,7 +16,7 @@ def evolve(toolbox, pop, pc, pm, num_gen):
 
         for i in range(len(offspring)):
             if random.random() < pm:
-                offspring[i] = toolbox.mutate(offspring[i])
+                offspring[i], = toolbox.mutate(offspring[i])
                 del offspring[i].fitness.values
 
         pop[:] = offspring
