@@ -20,4 +20,8 @@ def evolve(toolbox, pop, pc, pm, num_gen):
                 del offspring[i].fitness.values
 
         pop[:] = offspring
+
+    for ind in pop:
+            if not ind.fitness.valid:
+                ind.fitness.values = toolbox.evaluate(ind)
     return pop
