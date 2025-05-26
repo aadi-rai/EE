@@ -33,6 +33,6 @@ def toolbox(creator_types):
 
 def test_evolve_basic(creator_types, toolbox):
     pop = toolbox.population(size=1000)
-    pop = evolve(toolbox, pop, 0.75, 0.15, 20)
+    pop, logbook = evolve(toolbox, pop, 0.75, 0.15, 20)
 
     assert pop[0].fitness.values[0] > 30

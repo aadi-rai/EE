@@ -1,14 +1,29 @@
-from deap_er import algorithms
+from copy import deepcopy
+
+import numpy as np
+from deap_er import algorithms, tools
 
 
 def evolve(toolbox, pop, pc, pm, num_gen):
-    pop_size = len(pop)
+    stats = tools.Statistics(key=lambda ind: sum(ind.fitness.wvalues))
+    stats.register("max", np.max)
+    stats.register("avg", np.mean)
 
-    for _ in range(0, num_gen):
-        offspring = toolbox.select(pop, pop_size)
-        pop = algorithms.var_and(toolbox, offspring, pc, pm)
+    pareto_front = tools.ParetoFront()
+    logbook = tools.Logbook()
+
+    for gen in range(0, num_gen):
+        selection = toolbox.select(pop, len(pop))
+        pop = algorithms.var_and(toolbox, selection, pc, pm)
 
         for ind in pop:
-                if not ind.fitness.is_valid():
-                    ind.fitness.values = toolbox.evaluate(ind)
-    return pop
+            if not ind.fitness.is_valid():
+                ind.fitness.values = toolbox.evaluate(ind)
+
+        record = stats.compile(pop)
+
+        pareto_front.update(pop)
+        record["pareto_front"] = deepcopy(pareto_front)
+
+        logbook.record(gen=gen, **record)
+    return pop, logbook
