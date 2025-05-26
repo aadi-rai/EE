@@ -11,6 +11,10 @@ def evolve(toolbox, pop, pc, pm, num_elitism, num_gen):
     pareto_front = tools.ParetoFront()
     logbook = tools.Logbook()
 
+    for ind in pop:
+        if not ind.fitness.is_valid():
+            ind.fitness.values = toolbox.evaluate(ind)
+
     for gen in range(0, num_gen):
         selection = toolbox.select(pop, len(pop) - num_elitism)
         pop = algorithms.var_and(toolbox, selection, pc, pm) + tools.sel_best(pop, num_elitism)
