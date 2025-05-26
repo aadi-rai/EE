@@ -33,7 +33,7 @@ def toolbox_single(fitness_max):
 
 def test_evolve_single(fitness_max, toolbox_single):
     pop = toolbox_single.population(size=1000)
-    pop, logbook = evolve(toolbox_single, pop, 0.75, 0.15, 20)
+    pop, logbook = evolve(toolbox_single, pop, 0.75, 0.15, 1, 20)
 
     assert pop[0].fitness.values[0] > 30
 
@@ -70,6 +70,6 @@ def toolbox_multi(fitness_multi):
 
 def test_evolve_multi(fitness_multi, toolbox_multi):
     pop = toolbox_multi.population(size=1000)
-    pop, logbook = evolve(toolbox_multi, pop, 0.75, 0.15, 20)
+    pop, logbook = evolve(toolbox_multi, pop, 0.75, 0.15, 1, 20)
 
     assert sum(pop[0].fitness.wvalues) > 5
