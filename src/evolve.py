@@ -29,4 +29,5 @@ def evolve(toolbox, pop, pc, pm, num_elitism, num_gen):
         record["pareto_front"] = deepcopy(pareto_front)
 
         logbook.record(gen=gen, **record)
+        print(logbook.stream[:-1])
     return pop, logbook
