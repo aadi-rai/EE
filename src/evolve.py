@@ -30,4 +30,7 @@ def evolve(toolbox, pop, pc, pm, num_elitism, num_gen):
 
         logbook.record(gen=gen, **record)
         print(logbook.stream[:-1])
+
+        pc *= 0.999
+        pm *= 0.999
     return pop, logbook
